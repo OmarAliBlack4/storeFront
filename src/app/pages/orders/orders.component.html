@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h2>My Orders</h2>
+  <div class="mb-3">
+    <label for="email" class="form-label">Enter Your Email</label>
+    <input type="email" class="form-control" id="email" [(ngModel)]="userEmail" name="userEmail" required>
+    <button class="btn btn-primary mt-2" (click)="loadOrders()">View Orders</button>
+  </div>
+  <div *ngIf="orders.length > 0; else noOrders">
+    <div *ngFor="let order of orders" class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Order ID: {{ order.id }}</h5>
+        <p>Email: {{ order.userEmail }}</p>
+        <p>Name: {{ order.userName }}</p>
+        <p>Phone: {{ order.userPhone }}</p>
+        <p>Address: {{ order.userAddress }}</p>
+        <h6>Items:</h6>
+        <ul>
+          <li *ngFor="let item of order.orderItems">
+            {{ item.name }} - {{ item.quantity }} x {{ item.price }} EGP
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <ng-template #noOrders>
+    <p>No orders found.</p>
+  </ng-template>
+</div>

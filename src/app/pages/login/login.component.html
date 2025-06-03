@@ -1,0 +1,49 @@
+<section>
+  <div class="container">
+    <form [formGroup]="loginForm" (submit)="onSubmit()">
+      <!-- Email faild -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+          </p-inputGroupAddon>
+          <input pInputText  placeholder="Email" formControlName="userName" />
+        </p-inputGroup>
+        <div class="validation-ms">
+          @if (userName.touched && userName.dirty) {
+            @if (userName.getError('required')) {
+              <div class="card">
+                <p-messages
+                  [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'User Name is required' }] "
+                  [enableService]="false"
+                  [closable]="false" />
+              </div>
+            }
+          }
+        </div>
+      </div>
+      <!-- Password -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+          </p-inputGroupAddon>
+          <input pInputText type="password" placeholder="Password" formControlName="password"/>
+        </p-inputGroup>
+        <div class="validation-ms">
+          @if (password.touched && password.dirty) {
+            @if (password.getError('required')) {
+              <div class="card">
+                <p-messages
+                  [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Password is required' }] "
+                  [enableService]="false"
+                  [closable]="false" />
+              </div>
+            }
+          }
+        </div>
+      </div>
+      <p-button type="Submit" label="Submit" [disabled]="!loginForm.valid" />
+    </form>
+  </div>
+</section>

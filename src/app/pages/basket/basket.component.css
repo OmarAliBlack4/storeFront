@@ -1,0 +1,38 @@
+.container {
+  padding: 20px;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.btn-danger, .btn-success {
+  width: 100%;
+  margin-top: 10px;
+}
+
+h2, h4 {
+  color: #333;
+  text-align: center;
+}
+
+.text-center {
+  font-size: 1.2rem;
+  color: #777;
+}
+.d-flex {
+  gap: 10px; /* مسافة بين الأزرار */
+}
+
+.btn-sm {
+  padding: 5px 10px;
+}

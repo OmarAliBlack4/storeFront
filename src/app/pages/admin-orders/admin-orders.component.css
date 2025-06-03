@@ -1,0 +1,16 @@
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.card-title {
+  font-size: 1.25rem;
+}
+.alert {
+  margin-top: 1rem;
+}
+.form-control {
+  max-width: 300px;
+}
+.btn-outline-primary {
+  margin-left: 10px;
+}

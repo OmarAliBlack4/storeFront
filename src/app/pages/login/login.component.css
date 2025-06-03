@@ -1,0 +1,9 @@
+section{
+  min-height: 80vh;
+}
+form{
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+  margin: 40px 0;
+}

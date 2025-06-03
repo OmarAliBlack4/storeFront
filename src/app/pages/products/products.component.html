@@ -1,0 +1,17 @@
+<div *ngIf="products.length > 0; else loading" class="container">
+  <div class="d-flex flex-wrap gap-3 justify-content-center">
+    <div *ngFor="let product of products" class="card" style="width: 18rem;">
+      <img [src]="product.imageUrl" class="card-img-top" [alt]="product.name">
+      <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">{{product.description}}</p>
+        <h6>{{product.price}} EGP</h6>
+        <button class="btn btn-primary" (click)="addToCart(product)">Add To Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading ....</p>
+</ng-template>

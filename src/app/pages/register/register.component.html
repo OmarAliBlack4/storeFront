@@ -1,0 +1,123 @@
+<section>
+  <div class="container">
+    <h1>Register</h1>
+    <form [formGroup]="registertionForm" (ngSubmit)="submit()">
+      <!-- User Name -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-user"></i>
+          </p-inputGroupAddon>
+          <input pInputText formControlName="userName" placeholder="Username" />
+        </p-inputGroup>
+        <div class="validation-ms">
+          @if (userName.dirty && userName.touched) {
+            @if (userName.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'User Name is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+            @if (userName.getError('minlength')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'User Name minLength is 3 char' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-envelope"></i>
+          </p-inputGroupAddon>
+          <input pInputText formControlName="email" placeholder="Email" />
+        </p-inputGroup>
+        <div class="validation-ms">
+          @if (email.touched && email.dirty) {
+            @if (email.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Email  is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+            @if (userName.getError('email')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Email invalid' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input pInputText type="password" formControlName="password" placeholder="Password" />
+        </p-inputGroup>
+        <div class="validation-ms">
+          @if (password.touched && password.dirty) {
+            @if (password.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Password is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- RePassword -->
+      <div class="faild">
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input pInputText type="text" formControlName="role" placeholder="role" />
+        </p-inputGroup>
+        <div class="validation-ms">
+          @if (role.touched && role.dirty) {
+            @if (role.getError('required')) {
+              <div class="card">
+                <p-messages
+                    [value]="[{ severity: 'error' ,summary : 'validation error' , detail: 'Password is required' }] "
+                    [enableService]="false"
+                    [closable]="false" />
+              </div>
+            }
+          }
+        </div>
+      </div>
+      <p-button type="Submit" label="Submit" />
+    </form>
+  </div>
+</section>
+
+
+<!-- ------------------------------------Tools--------------------------------------------- -->
+
+
+<!-- notifications -->
+<div class="card flex justify-content-center">
+  <p-toast />
+</div>
+
+<!-- spinner -->
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#509fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
