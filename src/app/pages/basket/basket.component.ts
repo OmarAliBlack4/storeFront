@@ -3,20 +3,21 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BasketService, BasketDTO, BasketItemDTO } from '../../core/services/basket.service';
 import { OrderService, OrderRequestDTO } from '../../core/services/order.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-basket',
   standalone: true,
-  imports: [CommonModule, FormsModule], // أضفنا FormsModule للتعامل مع النموذج
+  imports: [CommonModule, FormsModule],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.css'
 })
 export class BasketComponent implements OnInit {
   basket: BasketDTO = { id: '', basketItem: [] };
-  userId: string = 'user123'; // ID السلة
+  userId: string;
   totalPrice: number = 0;
   orderForm: OrderRequestDTO = {
-    basketID: this.userId,
+    basketID: '',
     userEmail: '',
     userName: '',
     userPhone: '',
@@ -27,14 +28,17 @@ export class BasketComponent implements OnInit {
   constructor(
     private _basketService: BasketService,
     private _orderService: OrderService
-  ) {}
+  ) {
+    // جلب أو توليد userId
+    this.userId = localStorage.getItem('userId') || uuidv4();
+    localStorage.setItem('userId', this.userId);
+    this.orderForm.basketID = this.userId;
+  }
 
   ngOnInit(): void {
     this.loadBasket();
-    this.orderForm.basketID = this.userId; // التأكد من إن basketID متعيّن
   }
 
-  // جلب الـ Basket
   loadBasket(): void {
     this._basketService.getBasket(this.userId).subscribe({
       next: (basket: BasketDTO) => {
@@ -49,7 +53,6 @@ export class BasketComponent implements OnInit {
     });
   }
 
-  // حساب إجمالي السعر
   calculateTotalPrice(): void {
     this.totalPrice = this.basket.basketItem.reduce(
       (total, item) => total + item.price * (item.quantity || 1),
@@ -57,7 +60,6 @@ export class BasketComponent implements OnInit {
     );
   }
 
-  // إزالة منتج من الـ Basket
   removeFromBasket(itemId: number): void {
     this.basket.basketItem = this.basket.basketItem.filter(item => item.id !== itemId);
     this._basketService.updateBasket(this.basket).subscribe({
@@ -72,9 +74,8 @@ export class BasketComponent implements OnInit {
     });
   }
 
-  // تحديث الكمية
   updateQuantity(itemId: number, newQuantity: number): void {
-    if (newQuantity < 1) return; // منع الكمية من الصفر
+    if (newQuantity < 1) return;
     const item = this.basket.basketItem.find(item => item.id === itemId);
     if (item) {
       item.quantity = newQuantity;
@@ -91,14 +92,12 @@ export class BasketComponent implements OnInit {
     }
   }
 
-  // إنشاء طلب جديد
   buyNow(): void {
     if (this.basket.basketItem.length === 0) {
       alert('Your cart is empty');
       return;
     }
 
-    // التحقق من إن كل الحقول مليانة
     if (!this.orderForm.userEmail || !this.orderForm.userName || !this.orderForm.userPhone || !this.orderForm.userAddress) {
       alert('Please fill in all required fields');
       return;
@@ -109,12 +108,10 @@ export class BasketComponent implements OnInit {
       next: (order) => {
         console.log('Order created:', order);
         alert('Order placed successfully!');
-        // إفراغ السلة بعد الطلب
         this.basket.basketItem = [];
         this._basketService.updateBasket(this.basket).subscribe();
         this.calculateTotalPrice();
         this.isLoading = false;
-        // إعادة تعيين النموذج
         this.orderForm = {
           basketID: this.userId,
           userEmail: '',
@@ -122,6 +119,10 @@ export class BasketComponent implements OnInit {
           userPhone: '',
           userAddress: ''
         };
+        // Generate new userId after order
+        this.userId = uuidv4();
+        localStorage.setItem('userId', this.userId);
+        this.orderForm.basketID = this.userId;
       },
       error: (err) => {
         console.error('Error creating order:', err);
