@@ -10,7 +10,7 @@ export interface BasketItemDTO {
   imageUrl?: string;
   stockQuantity?: number;
   description?: string;
-  quantity: number; // إضافة الكمية
+  quantity: number; 
 }
 
 export interface BasketDTO {

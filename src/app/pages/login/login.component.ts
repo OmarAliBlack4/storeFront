@@ -22,6 +22,7 @@ export class LoginComponent {
 
 //constructor
   constructor(private _authService :AuthService,
+    private _router: Router
   ){
     this.initialFormControls();
     this.initialFormGroup();
@@ -54,14 +55,26 @@ export class LoginComponent {
 
 
 //loginApi method
-  loginApi(data : ILogin):void{
-    this._authService.login(data).subscribe({
-      next:(res)=>{
-        console.log(res);
-      },
-      error:(err)=>{
-        console.log(err);
-      },
-    })
-  }
+loginApi(data: ILogin): void {
+  this._authService.login(data).subscribe({
+    next: (res) => {
+      console.log(res);
+      
+      localStorage.setItem('userData', JSON.stringify(res));
+
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+      if (userData?.role === 'Admin') {
+        // this._router.navigate(['/products-panel']);
+      } else {
+        this._router.navigate(['/']);
+      }
+    },
+    error: (err) => {
+      console.log(err);
+    },
+  });
+}
+
+
 }

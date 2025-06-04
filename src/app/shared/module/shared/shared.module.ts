@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { Message, MessageService } from 'primeng/api';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -25,7 +26,11 @@ import { Message, MessageService } from 'primeng/api';
     MessagesModule,
     ToastModule,
     RippleModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -37,7 +42,11 @@ import { Message, MessageService } from 'primeng/api';
     MessagesModule,
     ToastModule,
     RippleModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule
   ],
     providers: [MessageService]
 })

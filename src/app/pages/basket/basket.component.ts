@@ -29,7 +29,6 @@ export class BasketComponent implements OnInit {
     private _basketService: BasketService,
     private _orderService: OrderService
   ) {
-    // جلب أو توليد userId
     this.userId = localStorage.getItem('userId') || uuidv4();
     localStorage.setItem('userId', this.userId);
     this.orderForm.basketID = this.userId;
@@ -119,7 +118,6 @@ export class BasketComponent implements OnInit {
           userPhone: '',
           userAddress: ''
         };
-        // Generate new userId after order
         this.userId = uuidv4();
         localStorage.setItem('userId', this.userId);
         this.orderForm.basketID = this.userId;

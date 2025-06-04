@@ -22,10 +22,9 @@ export class ProductsComponent implements OnInit {
     private _productService: ProductServicesService,
     private _basketService: BasketService
   ) {
-    // جلب أو توليد userId
     this.userId = localStorage.getItem('userId') || uuidv4();
     localStorage.setItem('userId', this.userId);
-    this.basket.id = this.userId; // ربط السلة بالـ userId
+    this.basket.id = this.userId; 
   }
 
   ngOnInit(): void {
@@ -85,5 +84,15 @@ export class ProductsComponent implements OnInit {
         console.error('Error updating basket:', err);
       }
     });
+  }
+
+  showAlert: boolean = false;
+  alert(product: IProductRead) {
+    this.addToCart(product);
+    this.showAlert = true;
+
+    setTimeout(()=>{
+    this.showAlert = false;
+    }, 1000);
   }
 }

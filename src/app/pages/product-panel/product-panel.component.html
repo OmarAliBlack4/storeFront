@@ -1,0 +1,76 @@
+<header class="p-3 border">
+    <button class="btn btn-warning p-2 w-1" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product</button>
+</header>
+<table class="table table-striped text-center">
+    <thead>
+        <tr>
+            <th scope="col">Product Picture</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock Quantity</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <th scope="row"><img [src]="product.imageUrl" [alt]="product.name"></th>
+            <td>{{product.name}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.stockQuantity}}</td>
+            <td>
+                <button class="btn btn-primary mx-2">Update</button>
+                <button class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog position-absolute top-50 start-50 translate-middle w-100">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Product Picture</label>
+                            <input class="form-control" type="file" id="formFile" formControlName="imageUrl">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="floatingInputGroup1"
+                                    placeholder="Product Name" formControlName="productName">
+                                <label for="floatingInputGroup1">Product Name</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Leave a description here" id="floatingTextarea2"
+                                style="height: 100px" formControlName="description"></textarea>
+                            <label for="floatingTextarea2">Description</label>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="floatingInputGroup2" placeholder="Price" formControlName="price">
+                                <label for="floatingInputGroup2">Price</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="floatingInputGroup3" formControlName="stockQuantity"
+                                    placeholder="Stock Quantity">
+                                <label for="floatingInputGroup3">Stock Quantity</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</table>
